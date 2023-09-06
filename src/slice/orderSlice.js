@@ -62,7 +62,13 @@ const orderSlice = createSlice({
         orderReset: (state) => {
             state.order = {}
             state.is_available = false
-        }
+        }, 
+        setOreder: (state, action) =>{
+            state.status = 'success'
+            state.order = action.payload
+            state.is_available = true
+            const flag = true
+        } 
     },
     extraReducers: builder => {
         builder 
@@ -121,4 +127,5 @@ export default orderSlice.reducer;
 
 export const {
     orderReset,
+    setOreder,
  } = orderSlice.actions

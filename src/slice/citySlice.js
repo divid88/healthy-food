@@ -1,23 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const requestAllCities = createAsyncThunk('city/requestAllCities', async() => {
-    const config = {
-        headers : {
-            'context_type': 'application/json'
-        }
-    }
-    
-    const response = await axios.get('/vendor/cities/', config)
-        return response.data
-})
-
 
 
 const initialState = {
     status: 'idle',
     all_cities: [],
     city: 0,
+    city_name:'',
     vendors: []
 }
 
@@ -27,25 +17,11 @@ const citySlice = createSlice({
     initialState,
     reducers: {
         choiceCity: (state, action) => {
-            state.city = action.payload
+            console.log(action);
+            state.city = action.payload.city.id
+            state.city_name = action.payload.city.name
         }
     },
-    extraReducers: builder => { 
-        builder
-            .addCase(requestAllCities.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(requestAllCities.fulfilled, (state, action) => {
-                state.status = 'success'
-                state.all_cities = action.payload
-            })
-            .addCase(requestAllCities.rejected, (state, action) => {
-                state.status = 'errors'
-                state.errors = action.payload
-            })
-
-       
-    }
 })
 
 export default citySlice.reducer

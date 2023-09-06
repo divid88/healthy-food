@@ -6,34 +6,45 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestPayment } from '../../slice/paymentSlice';
+
 import { useNavigate } from 'react-router-dom';
+import { useCreatePaymentMutation } from '../../api/api';
 
 const MainPayment = () => {
 
   const {order} = useSelector(state => state.order)
-  const {access} = useSelector(state => state.customer.customer)
+  const {access} = useSelector(state => state.customer)
   const { status } = useSelector(state => state.payment)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {id} = order
-  
+  const [requestPayment, {data:payment, isSuccess, isError}] = useCreatePaymentMutation()
   const [paid, setChoice] = React.useState(false)
 
   const data = {id, paid}
-  console.log(status);
+  const handleCreatePayment = async() => {
+    try{
+      await requestPayment({access, data})
+
+    }catch(error){
+      console.log("error", error)
+    }
+  }
 
   const handlePayment = () => {
-    dispatch(requestPayment({access, data}))
-
-    setTimeout(()=>{
-    navigate('/')
-  }, [3000])
+    handleCreatePayment()
   }
+
+  React.useEffect(()=> {
+    if(isSuccess){
+      navigate('/')
+    }
+  })
+
   
   return (
     <>
-  {/* {!isEqual(payment, {}) && <SuccessTostify/>} */}
+  {/* {isSuccess && <SuccessTostify/>} */}
     <Box textAlign='center' width='100%'>
         <Typography sx={{marginY:'20px'}}> پرداخت</Typography>
            <FormControl textAlign='center'>

@@ -13,10 +13,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Index from './screen/Index'
 import MainChoiceCity from './components/choiceCity/MainChoiceCity'
 import OrderScreen from './screen/OrderScreen'
+import RegisterVendor from './screen/RegisterVendor'
 import PaymentScreen from './screen/PaymentScreen'
 import AuthProvider from './components/customer/AuthProvider'
-import OrdersCustomer from './components/order/OrdersCustomer'
 import Orders from './screen/Orders'
+import SearchFilter from './screen/SearchFilter'
+import AdminVendor from './screen/AdminVendor'
 
 const App = () => {
 
@@ -35,7 +37,7 @@ const App = () => {
           <Routes>
              
             <Route path='/' element={<Index/>}/>
-      
+            <Route path='/search' element={<SearchFilter/>}/>
             <Route path='/vendors' element={<BoxVendors />} />
             <Route path='vendors/vendor/:id' element={<VendorDetail/> }/>
 
@@ -46,6 +48,8 @@ const App = () => {
             <Route path='payments/:id' element={<AuthProvider> <PaymentScreen/> </AuthProvider>} />
             <Route path='/orders' element={<AuthProvider><Orders/></AuthProvider>}/>
 
+            <Route path='/addVendor' element={<AuthProvider><RegisterVendor/></AuthProvider>}/>
+            <Route path='/admin_vendor' element={<AuthProvider><AdminVendor/></AuthProvider>}/>
     
             </Routes>
           </BrowserRouter>

@@ -1,9 +1,10 @@
 import {styled} from '@mui/material/styles'
 import { TextField, Button } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { requestLoginCustomer } from '../../slice/customerSlice'
+import { requestLoginCustomer, setUser } from '../../slice/customerSlice'
+import { useRequestLoginMutation } from '../../api/api'
 
 
 const NewTextField = styled(TextField)(
@@ -30,35 +31,44 @@ const NewTextField = styled(TextField)(
   })
 
 
-const MainLogin = () => {
+const MainLogin = ({handleClose}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-
+  const[requestLogin, {data:loginUser, isSuccess, isError, isLoading}] = useRequestLoginMutation()
   const dispatch = useDispatch()
 
  const data = {email, password}
- console.log(data);
-  const handleLogin = () => {
 
-    dispatch(requestLoginCustomer(data))
 
+  const handleLogin = async() => {
+    try{
+      await requestLogin(data)
+    }catch(error){
+      alert(error)
+    }
   }
 
 
+  useEffect(()=>{
+    if(isSuccess){
+      dispatch(setUser(loginUser))
+      handleClose()
+    }
+  })
   return (
 
       <Grid2 
       sx={{
-        display:'flex', 
-        flexDirection:'column', 
-        justifyContent:'center', 
-        alignItem:'center', 
+          display:'flex', 
+          flexDirection:'column', 
+          justifyContent:'center', 
+          alignItem:'center', 
         width:'300px' ,  
         height:'250px',
         
       '& > :not(style)': { margin:'10px auto', width: '30ch' },}}>
-
+        
     
       <NewTextField 
          id="email"

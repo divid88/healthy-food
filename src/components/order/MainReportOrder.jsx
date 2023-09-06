@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestReportOrder } from '../../slice/orderSlice';
-import AuthProvider from '../../components/customer/AuthProvider'
+
 import { CheckCircleOutline, DangerousOutlined } from '@mui/icons-material';
 import { Icon } from '@mui/material';
 

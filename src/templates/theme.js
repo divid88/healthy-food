@@ -17,7 +17,8 @@ palette:{
   },
   success:{
     main: '#00e180'
-  }
+  },
+
 },
 typography:{
   fontFamily: 'vazir'

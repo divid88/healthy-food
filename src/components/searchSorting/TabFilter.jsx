@@ -48,8 +48,8 @@ export default function TabFilter() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+    <Box sx={{ width: '100%', height:'auto' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', display:'flex', justifyContent:'center' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label=" فیلتر" {...a11yProps(0)} />
           <Tab label="مرتب سازی" {...a11yProps(1)} />

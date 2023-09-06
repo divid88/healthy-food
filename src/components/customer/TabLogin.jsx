@@ -43,7 +43,7 @@ function a11yProps(index) {
   };
 }
 
-export default function TabLogin() {
+export default function TabLogin({handleClose}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -70,10 +70,10 @@ export default function TabLogin() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <MainLogin/>
+        <MainLogin handleClose={handleClose}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <MainRegister/>
+        <MainRegister handleClose={handleClose}/>
       </TabPanel>
 
     </Box>

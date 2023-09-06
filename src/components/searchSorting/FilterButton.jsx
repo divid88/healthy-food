@@ -3,7 +3,12 @@ import { Box, Button, Collapse, Typography } from "@mui/material"
 import { MenuBookOutlined } from "@mui/icons-material"
 import { useState } from "react"
 import DialogFilter from "./DialogFilter"
+import Zoom from '@mui/material/Zoom';
+import * as React from 'react';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Zoom timeout={500} ref={ref} {...props} />;
+});
 
 const FilterButton = () => {
   const [open, setOpen] = useState(false)
@@ -25,7 +30,7 @@ const FilterButton = () => {
               backgroundColor: '#fff',
               marginLeft: '4px',
               color: 'gray.500',
-             
+         
               '& .MuiButton-root':{
                 height: '5rem',
                 

@@ -27,7 +27,7 @@ transition: ${theme.transitions.create(['background-color', 'transform'], {
 
       <ToggleFavoriteVendor vendor_id={vendor.id}/>
 
-      <Link to={`vendor/${vendor.id}`} style={{ textDecoration: 'none' }}>  
+      <Link to={`/vendors/vendor/${vendor.id}`} style={{ textDecoration: 'none' }}>  
       
       <Box sx={{ position: 'relative' }}>
     <CardMedia
@@ -87,7 +87,7 @@ transition: ${theme.transitions.create(['background-color', 'transform'], {
         borderRadius:'5px',
         overflow: 'hidden',
         width: '70px',
-        height: '70px'
+        height: '60px'
     }}>
         <img src={vendor.logo} alt="vendor-logo" width={'70px'} height='100%' />
     </Box>
@@ -116,7 +116,7 @@ transition: ${theme.transitions.create(['background-color', 'transform'], {
   <Box sx={{backgroundColor:'secondary.main', color:'#555'}}>
     <Grid2  sx={{padding: '5px', display:'flex'}}>
 
-      <Grid2 md={6}>
+      <Grid2 md={6} sx={{p:1}}>
         <Typography >{vendor.name}</Typography>
       </Grid2>
 
@@ -128,18 +128,17 @@ transition: ${theme.transitions.create(['background-color', 'transform'], {
         }
         </Grid2>
     </Grid2>
-    <Grid2 display='flex' sx={{color:'#999'}}>
+    <Grid2 container justifyContent={'space-between'}> 
+    <Grid2 display='flex' sx={{color:'#999', p:1}}>
       
         <Icon><PinDropOutlined/></Icon> 
 
-        <Grid2 variant='subtitle2'> 
+       
         <Typography variant="subtitle2" > 
                  انتهای کوچه مرغیا
           </Typography>
         </Grid2>
 
-    </Grid2>
-    <Grid2 sx={{textAlign:'right'}}>
         <Button variant="outlined" size="small" sx={{padding:0, marginBottom:1, marginRight:1}}>new</Button>
     </Grid2>
 

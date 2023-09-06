@@ -34,7 +34,7 @@ const Index = () => {
   <>
   <MainChoiceCity show={choicCity} />
   <ShowLocation />
-
+    
   <SearchSorting/> 
   </>
   )

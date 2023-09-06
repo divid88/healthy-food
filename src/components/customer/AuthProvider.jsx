@@ -1,22 +1,38 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { checkAuthorization } from '../../slice/customerSlice'
+import { checkAuthorization, setAccess } from '../../slice/customerSlice'
 import LoginDialog from './LoginDialog'
+import { useRefreshTokenMutation } from '../../api/api'
 
 const AuthProvider = ({children}) => {
     const [showLogin, setShowLogin] = useState(false)
-    const {refresh_exp, refresh} = useSelector(state => state.customer) 
+    const {refresh} = useSelector(state => state.customer) 
 
-   
+    const [requestRefreshToken, {data:tokens, isSuccess, isError}] = useRefreshTokenMutation()
     const dispatch = useDispatch()
-    const data = {"refresh": refresh}
-    useEffect(() => {
     
-        dispatch(checkAuthorization(data))
-        
+    const handleRefresh = async() => {
+      try{
+        await requestRefreshToken({refresh})
+      }catch(error){
+        console.log('show login ');
+        setShowLogin(true)
+      }
+    }
+    useEffect(() => {
 
+      handleRefresh()
     }, [])
+
+    useEffect(()=> {
+      if(isSuccess){
+        dispatch(setAccess(tokens))
+      } 
+      if(isError){
+        setShowLogin(true)
+      }
+    }, [isSuccess])
     
     const setCloseLoginShow = () => {
       setShowLogin(false)
@@ -24,8 +40,8 @@ const AuthProvider = ({children}) => {
 
   return (
     <div>
-  {!refresh_exp ? <>{children}</> :  
-  <LoginDialog open={true}  handleClose={setCloseLoginShow}/>}
+    {children}
+  <LoginDialog open={showLogin}  handleClose={setCloseLoginShow}/>
     </div>
   )
 }

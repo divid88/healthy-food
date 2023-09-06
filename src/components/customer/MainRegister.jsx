@@ -1,8 +1,10 @@
 import { TextField, Button } from "@mui/material"
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
-import React, { useState, useRef } from 'react'
+import React, { useEffect, useState} from 'react'
 import { useDispatch } from 'react-redux'
 import {styled} from '@mui/material/styles'
+import { useRegisterUserMutation } from "../../api/api"
+import { setUser } from "../../slice/customerSlice"
 
 const NewTextField = styled(TextField)(
   {
@@ -27,21 +29,37 @@ const NewTextField = styled(TextField)(
     }
   })
 
-const MainRegister = () => {
+const MainRegister = ({handleClose}) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [Rpassword, setًًًًRPassword] = useState('')
 
+  const [registerRequest, {data: registerData, isSuccess, isLoading}] = useRegisterUserMutation()
 
   const dispatch = useDispatch()
 
  const data = {email, password}
- console.log(data);
-  const handleLogin = () => {
 
-    dispatch()
-
+ const register = async() => {
+  try{
+    await registerRequest(data)
+  }catch(error){
+    console.log(error)
   }
+ }
+ useEffect(()=>{
+  if(isSuccess){
+    dispatch(setUser(registerData))
+    handleClose()
+  }
+ })
+
+  const handleRegister = () => {
+
+    register()
+  }
+
   return (
     <Grid2 
     sx={{
@@ -83,10 +101,10 @@ const MainRegister = () => {
       autocomplete={false}
       label="تکرار رمز عبور"   
       variant="outlined"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
+      value={Rpassword}
+      onChange={(e) => setًًًًRPassword(e.target.value)}
       />
-    <Button type='button' variant='outlined' onClick={handleLogin}>ورود</Button>
+    <Button type='button' variant='outlined' onClick={handleRegister}>ثبت نام</Button>
     </Grid2>
    
   )

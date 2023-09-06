@@ -18,7 +18,7 @@ export const requestAddAddresses = createAsyncThunk('address/addAddress', async(
             'context-type': 'application/json'
         }
     }
-    console.log(data);
+   
     const response = await axios.post('/customer/address/', data,config)
         return response.data
 })

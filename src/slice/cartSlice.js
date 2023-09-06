@@ -16,7 +16,7 @@ const cartSice = createSlice({
     reducers: {
         addCartItem: (state, action) => {
             const exist_item = state.cart_items.find(item => item.id === action.payload.food.id)
-
+             
             if(exist_item){
                 exist_item.qty += 1
             }
@@ -35,6 +35,7 @@ const cartSice = createSlice({
             }
         },
         addAddress: (state, action) => {
+            console.log(action.payload)
             state.shipping_address = action.payload
         },
 

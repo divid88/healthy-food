@@ -3,65 +3,101 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestAddAddresses, requestAllAddresses } from '../../slice/addressSlice';
 import Dialog from '@mui/material/Dialog';
 import { addAddress } from '../../slice/cartSlice';
+import { useRegisterAddressMutation, useRequestAddressesQuery } from '../../api/api';
 
+import {styled} from '@mui/material/styles'
 
+const NewTextField = styled(TextField)(
+  {
+    '& label': {
+      fontSize:'13px',
+      lineHeight:'.9'
+    },
+    '& .MuiOutlinedInput-input': {
+      color: '#555',
+      padding:'7px',
+      
+    },
+
+    '& .MuiOutlinedInput-root':{
+
+      '& fieldset': {
+        borderColor: '#ccc',
+      
+      },
+
+     
+    }
+  })
 
 export default function AddAddressForm({handleClose, setAddAddress}) {
     const [address, setAddress] = useState('')
     const [post_code, setPostCode] = useState('')
-    const {newAddress} = useSelector(state => state.address) 
-    console.log(newAddress);
+ 
+
     const {city} = useSelector(state => state.location)
     const dispatch = useDispatch()
+    const {access} = useSelector(state => state.customer)
+    const [requestAddAddress, {data:newAddress, isSuccess, isError, isLoading }] = useRegisterAddressMutation()
 
     const data = {address, city, post_code}
 
-    useEffect(()=> {
-        return () => {
-            const {id} = newAddress
-            dispatch(addAddress(id))
+   const handleAddress = async() => {
 
-
-        }
-    })
+    try{
+      requestAddAddress({data, access})
+    }catch(error){
+      console.log("error", error)
+    }
+   }
 
     const handleAddAddress = () => {
-        dispatch(requestAddAddresses(data))
-        setAddAddress(()=> false)
-        handleClose()
+      handleAddress()
+      
     }
 
-    
+    useEffect(() => {
+      if(isSuccess){
+      dispatch(addAddress(newAddress.id))
+      handleClose()
+      }
+    }, [isSuccess])
   return (
     <>
     <Box
       component="form"
       sx={{
-        minWidth:'350px', maxWidth:'450px',
-    
-        
-        '& > :not(style)': { m: 1, display:'block', marginX:'auto', color:'grey.700'},
-      }}
+        display:'flex', 
+        flexDirection:'column', 
+        justifyContent:'center', 
+        alignItem:'center', 
+        width:'300px' ,
+       height:'250px',   
+     
+      '& > :not(style)': { margin:'10px auto', width: '30ch' },}}
       noValidate
       autoComplete="off"
     >
-      <TextField 
-        label="آدرس" 
-        color="success" 
-   
-        onChange={(e) => setAddress(e.target.value)} 
-        focused fullWidth/>
-      <br/>
-      <TextField 
-        label="پلاک " 
-        color="success" 
-
-        onChange={(e) => setPostCode(e.target.value)} 
-        focused fullWidth/>
-
+      <NewTextField 
+       id="address"
+       name='address'
+       autoComplete={true}
+      label="آدرس" 
+      variant="outlined"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+       />
+       <NewTextField 
+       id="address"
+       name='address'
+       autoComplete={true}
+      label="پلاک" 
+      variant="outlined"
+      value={post_code}
+      onChange={(e) => setPostCode(e.target.value)}
+       />
 
       <Button variant='outlined' type='button' onClick={handleAddAddress}> ثبت</Button>
     </Box>

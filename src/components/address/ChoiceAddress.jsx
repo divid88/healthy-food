@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 import MainAddress from './MainAddress';
 import AddAddressForm from './AddAddressForm';
+import TabLogin from './TabLogin';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -23,7 +24,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 
 export default function ChoiceAddress({open, handleClose}) {
-    const [addAddress, setAddAddress] = React.useState(false)
+
 
  
   return (
@@ -35,28 +36,10 @@ export default function ChoiceAddress({open, handleClose}) {
         open={open}
       >
     
-        
-          <Typography  gutterBottom 
-          sx={{
-            padding:'10px',
-            textAlign:'center', 
-            color:'grey.700',
-            fontSize:'1.2rem',
-            fontWeight:'900'
-            }}>
-            {addAddress ? 'ثبت آدرس' :'انتخاب آدرس'} 
-          </Typography>
-          <DialogContent dividers>
-          <Typography gutterBottom>
-           {addAddress ? <AddAddressForm handleClose={handleClose} setAddAddress={setAddAddress}/> : 
-           <MainAddress handleClose={handleClose}/>}
-            </Typography>
-          <Typography gutterBottom textAlign='center'>
-        
-          {! addAddress && 
-          <Button variant='outlined' onClick={() => setAddAddress(true)}>اضافه کردن آدرس</Button>
-}
-          </Typography>
+        <DialogContent>
+          
+            <TabLogin/>
+          
         </DialogContent>
       </BootstrapDialog>
     </div>

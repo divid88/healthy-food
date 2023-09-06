@@ -3,6 +3,7 @@ import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box } from 
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import { AddBusinessOutlined } from "@mui/icons-material"
 import { logout } from '../../slice/customerSlice'
 import { Link } from 'react-router-dom';
 
@@ -32,6 +33,28 @@ const MainPanle = () => {
                             <EventAvailableIcon/>
                         </ListItemIcon>
                         <ListItemText   primary='سفارشات شما'/>
+                    </ListItemButton>
+                    </Link>
+                </ListItem>
+
+                <ListItem disablePadding>
+                    <Link to='/addVendor' style={{textDecoration:'none', color:'#333'}}>
+                    <ListItemButton disablePadding>
+                        <ListItemIcon>
+                        <AddBusinessOutlined/>
+                        </ListItemIcon>
+                        <ListItemText   primary='ثبت رستوران'/>
+                    </ListItemButton>
+                    </Link>
+                </ListItem>
+
+                <ListItem disablePadding>
+                    <Link to='/admin_vendor' style={{textDecoration:'none', color:'#333'}}>
+                    <ListItemButton disablePadding>
+                        <ListItemIcon>
+                        <AddBusinessOutlined/>
+                        </ListItemIcon>
+                        <ListItemText   primary='ادمین پنل'/>
                     </ListItemButton>
                     </Link>
                 </ListItem>

@@ -16,7 +16,7 @@ const FoodItem = ({food, id}) => {
     const handleCloseContactVendor = () => {
       setOpenContactVendor(false)
     }
-    console.log(vendor, id);
+ 
     const handleAddCart = () => {
         if (vendor === 0){
         dispatch(addCartItem({food, id}))

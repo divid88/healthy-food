@@ -79,6 +79,17 @@ const customerSlice = createSlice({
             state.access = ''
             state.username = ''
             state.authorization = false
+        },
+
+        setUser: (state, action) => {
+            state.refresh = action.payload.refresh
+            state.access = action.payload.access
+            state.username = action.payload.username
+            state.refresh_exp = true
+        },
+
+        setAccess: (state, action) => {
+            state.access = action.payload.access
         }
     },
     extraReducers: builder => {
@@ -154,7 +165,7 @@ const customerSlice = createSlice({
     }
 })
 
-export const {logout} = customerSlice.actions
+export const {logout, setUser, setAccess} = customerSlice.actions
 
 
 export default customerSlice.reducer;

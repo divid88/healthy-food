@@ -18,8 +18,8 @@ export default function TableCart({cart_items}) {
     dispatch(minusCartItem(id))
   }
 
-  const handleAddCart = (item) => {
-    dispatch(addCartItem(item))
+  const handleAddCart = (food) => {
+    dispatch(addCartItem({food}))
   }
     return (
       <TableContainer component={Paper}>

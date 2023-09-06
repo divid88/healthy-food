@@ -24,9 +24,9 @@ const OrderDetail = () => {
   const handleOpenPaymentDialog = () => {
     setPaymentDialog(true)
 }
-
-
+    
     const {items, shipping_address} = order
+    
 
     const total_price = items.reduce((acc, item) => acc + item.price, 0)
  
@@ -51,7 +51,7 @@ const OrderDetail = () => {
     <TableBody>
             {items.map((item, index) => (
               <TableRow
-                key={item.id}
+                key={item.food.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
               

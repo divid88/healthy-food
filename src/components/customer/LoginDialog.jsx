@@ -32,7 +32,7 @@ export default function LoginDialog({open, handleClose}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} display='flex'>
-          <TabLogin/>
+          <TabLogin handleClose={handleClose}/>
         </Box>
       </Modal>
     </div>

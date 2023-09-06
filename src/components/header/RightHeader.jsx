@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, Fab, IconButton } from "@mui/material"
 import LoginDialog from "../customer/LoginDialog"
 import { useState } from "react"
 import { isEqual } from "lodash"
@@ -6,6 +6,7 @@ import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import OrdersCustomer from "../order/OrdersCustomer"
 import PanelDrawer from "../userPanle/PanelDrawer"
+
 
 const RightHeader = () => {
   const [openLoginDialog, setOpenLoginDialog] = useState(false)
@@ -25,7 +26,7 @@ const RightHeader = () => {
 
   return (
     <>
-    {isEqual(customer, {}) ? <> 
+    {isEqual(username, '') ? <> 
         <Button variant="outlined" onClick={handleCloseLoginDialog}>ورود</Button>
 
         <LoginDialog open={openLoginDialog} handleClose={handleCloseLoginDialog}/>
@@ -35,8 +36,8 @@ const RightHeader = () => {
 
           {/* <OrdersCustomer open={openOrdersDrawer} handleClose={ToggleOpenOrderDrawer}/> */}
         <Button variant="outlined" onClick={handleToggleUserDrawer}>{username}</Button>
-
-       
+        
+    
         <PanelDrawer open={openUserDrawer} handleClose={handleToggleUserDrawer} />
         </>}
     </>

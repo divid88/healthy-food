@@ -5,18 +5,25 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
-import MainChoiceCity from './MainChoiceCity';
-import { useDispatch, useSelector } from 'react-redux';
-import { requestAllCities, choiceCity } from '../../slice/citySlice';
 import { Box } from '@mui/material';
 import { isEqual } from 'lodash';
 
 
-export default function DialogChoiceCity({show, all_cities, setUserCity, userCity, handleChoiceCity}) {
+export default function DialogChoiceCity({
+                                        show, 
+                                        all_cities, 
+                                        setUserCity, 
+                                        userCity, 
+                                        handleChoiceCity}) {
  
   const[openChoiceCityDialog, setOpenChoiceCityDialog] = useState(true)
+
+  const handleSetCity = (e) => {
+    const city = all_cities.find(item => item.id === Number(e.target.value))
+
+    setUserCity({city})
+  }
+  
   return (
     <div>
       <Dialog
@@ -37,9 +44,10 @@ export default function DialogChoiceCity({show, all_cities, setUserCity, userCit
    key={city.id}  
    sx={{margin:'5px'}}
    value={city.id}
+   name={city.name}
 
-    onClick={(e) => setUserCity(e.currentTarget.value)}
-
+    onClick={(e) => handleSetCity(e)}
+    
    >
 
       {city.name}

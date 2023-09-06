@@ -2,19 +2,18 @@ import { FormControl, Select, MenuItem, FormHelperText, Button, Typography } fro
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { requestAllAddresses } from "../../slice/addressSlice"
-import { isEqual } from "lodash"
+
+
 import { addAddress } from "../../slice/cartSlice"
+import { useRequestAddressesQuery } from "../../api/api"
+
 
 const MainAddress = ({handleClose}) => {
     const [addressState, setAddress] = useState(0)
-    const {addresses} = useSelector(state => state.address)
+    const {access} = useSelector(state => state.customer)
     const dispatch = useDispatch()
 
-    useEffect(()=> { 
-        dispatch(requestAllAddresses())
-    }, [dispatch])
-
+    const {data:addresses, isSuccess, isError, isLoading} = useRequestAddressesQuery(access)
     const handleChange = (e) => {
         setAddress(e.target.value)
     }
@@ -23,10 +22,26 @@ const MainAddress = ({handleClose}) => {
         dispatch(addAddress(addressState))
         handleClose()
     }
+
+    console.log(addresses);
   return (
-    <Grid2 md={4}>    
     
-    {isEqual(addresses, []) ? (
+    <Grid2 md={4}>   
+
+<Typography  gutterBottom 
+          sx={{
+            padding:'10px',
+            textAlign:'center', 
+            color:'grey.700',
+            fontSize:'1.2rem',
+            fontWeight:'900'
+            }}>
+            {addAddress ? 'ثبت آدرس' :'انتخاب آدرس'} 
+          </Typography>
+        
+    {isSuccess ?
+      <> 
+    {addresses.length === 0 ? (
         <Typography>آدرسی برای شما ثبت نشده</Typography>
     ) : (<FormControl sx={{ m: 1, minWidth:'350px', maxWidth:'450px'}}>
     <Select
@@ -37,7 +52,7 @@ const MainAddress = ({handleClose}) => {
     >
     
     {addresses.map(address=> 
-      <MenuItem value={address.id}>{address.address}</MenuItem>
+      <MenuItem value={address.id} key={address.id}>{address.address}</MenuItem>
       )}
     </Select>
     <FormHelperText>آدرس های شما</FormHelperText>
@@ -52,8 +67,11 @@ const MainAddress = ({handleClose}) => {
         
         </Button>
   </FormControl>)}
+  </>:isError ? <div>error</div>: isLoading ? <div>Loading</div> : null
+  
+}
   </Grid2>
-
+  
   )
 }
 
